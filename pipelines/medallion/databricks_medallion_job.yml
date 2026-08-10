@@ -1,0 +1,45 @@
+name: medallion-load-dim-customer
+description: Medallion pipeline (bronze -> silver -> gold) with tests and rollback
+owner: pnair11
+
+tasks:
+  - task_key: bronze_ingest
+    python_script_path: /Repos/<your_user>/bronze_ingest.py
+    timeout_seconds: 1800
+
+  - task_key: silver_transform
+    python_script_path: /Repos/<your_user>/silver_transform.py
+    depends_on:
+      - task_key: bronze_ingest
+    timeout_seconds: 1800
+
+  - task_key: gold_merge
+    python_script_path: /Repos/<your_user>/gold_merge.py
+    depends_on:
+      - task_key: silver_transform
+    timeout_seconds: 3600
+
+  - task_key: medallion_tests
+    python_script_path: /Repos/<your_user>/medallion_tests.py
+    depends_on:
+      - task_key: gold_merge
+    timeout_seconds: 900
+
+  - task_key: medallion_rollback
+    python_script_path: /Repos/<your_user>/medallion_rollback.py
+    depends_on:
+      - task_key: medallion_tests
+        outcome: FAILED
+    timeout_seconds: 1800
+
+cluster:
+  spark_version: "14.x-scala2.12"
+  node_type_id: "Standard_DS3_v2"
+  num_workers: 4
+  autotermination_minutes: 30
+
+notifications:
+  on_failure:
+    - email: team-data-eng@example.com
+  on_success:
+    - email: data-warehouse@example.com
