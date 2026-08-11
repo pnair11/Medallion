@@ -3,8 +3,8 @@ from datetime import datetime
 import json
 
 BASE_PATH = "dbfs:/medallion_runs"
-SRC_TABLE = "dbo.Customer_Source"
-CONTROL_TABLE = "dbo.Control_Table"
+SRC_TABLE = "dev_catalog.bronze.Customer_Source"
+CONTROL_TABLE = "dev_catalog.bronze.Control_Table"
 TABLE_NAME_KEY = "Customer"
 
 def now_id():

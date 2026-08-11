@@ -1,6 +1,6 @@
 from pyspark.sql import functions as F
 
-DIM_TABLE = "dbo.Dim_Customer"
+DIM_TABLE = "dev_catalog.bronze.Dim_Customer"
 
 dim = spark.table(DIM_TABLE)
 
