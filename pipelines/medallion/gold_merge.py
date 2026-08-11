@@ -3,10 +3,10 @@ from pyspark.sql.window import Window
 from datetime import datetime
 import traceback
 
-SRC_TABLE = "dbo.Customer_Source"
-DIM_TABLE = "dbo.Dim_Customer"
-CONTROL_TABLE = "dbo.Control_Table"
-ERROR_TABLE = "dbo.Error_Log"
+SRC_TABLE = "dev_catalog.bronze.Customer_Source"
+DIM_TABLE = "dev_catalog.bronze.Dim_Customer"
+CONTROL_TABLE = "dev_catalog.bronze.Control_Table"
+ERROR_TABLE = "dev_catalog.bronze.Error_Log"
 TABLE_NAME_KEY = "Customer"
 
 run_id = int(datetime.now().strftime("%Y%m%d%H%M%S"))

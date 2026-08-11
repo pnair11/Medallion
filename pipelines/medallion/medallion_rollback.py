@@ -1,9 +1,9 @@
 from datetime import datetime
 import json
 
-DIM_TABLE = "dbo.Dim_Customer"
-CONTROL_TABLE = "dbo.Control_Table"
-ERROR_TABLE = "dbo.Error_Log"
+DIM_TABLE = "dev_catalog.bronze.Dim_Customer"
+CONTROL_TABLE = "dev_catalog.bronze.Control_Table"
+ERROR_TABLE = "dev_catalog.bronze.Error_Log"
 
 def current_version(table_name):
     rows = spark.sql(f"DESCRIBE HISTORY {table_name}").select("version").orderBy("version", ascending=False).limit(1).collect()
